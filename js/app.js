@@ -27,6 +27,7 @@ var lima = ['Lima', 2, 16, 4.6];
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
+  console.log(min,max);
   return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive 
 }
 
@@ -36,8 +37,8 @@ function calculateCookiesPurchased(minCustomers, maxCustomers, cookiesPerCustome
   //var cookiesPurchasedByHourOfDay = [];
   for (var i = 0; i < storeHours.length; i++) {
     cookiesPurchasedPerHour = (getRandomIntInclusive(minCustomers, maxCustomers)) * cookiesPerCustomer;
-    cookiesPurchasedByHourOfDay.push(storeHours[i] + ' : ' + cookiesPurchasedPerHour);
-    var totalCookies = cookiesPerCustomer;
+    cookiesPurchasedByHourOfDay.push(storeHours[i] + ' : ' + cookiesPurchasedPerHour + ' cookies');
+    var totalCookies = cookiesPurchasedPerHour;
     totalCookies ++
   }
   return [cookiesPurchasedByHourOfDay, totalCookies];
@@ -50,7 +51,7 @@ var seattleSales = {
   minCustomers: seattle[1],
   maxCustomers: seattle[2],
   avgCookiesPerCustomer: seattle[3],
-  customerPerHour: getRandomIntInclusive(this.minCustomers, this.maxCustomers), //*Unresolved BUG* if I hard code numbers, this works but when I use 'this' reference, it breaks and returns a NaN
+  customersPerHour: getRandomIntInclusive(this.minCustomers, this.maxCustomers), //*Unresolved BUG* if I hard code numbers, this works but when I use 'this' reference, it breaks and returns a NaN
   cookiesPurchasedPerHour: calculateCookiesPurchased(this.minCustomers, this.maxCustomers, this.avgCookiesPerCustomer)[0],
   totalCookiesSold: calculateCookiesPurchased(this.minCustomers, this.maxCustomers, this.avgCookiesPerCustomer)[1],
   render: function () {

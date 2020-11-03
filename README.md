@@ -1,18 +1,19 @@
-# cookie-stand
-Salmon cookie project for CF201
+# LAB - 06
 
+## Salmon Cookies
+Develope a webpage for a salmon cookie store. It is a first major project to own the full webapp development.
 
-LAB - Number
+## Author: Sang Lee | sanglee76@yahoo.com
 
-Project Name
-I build an app with a direct and powerful purpose. It does all of the things that it accomplishes well. I should describe the purpose and functionality so those that visit my README understand the app
-
-Author: Student/Group Name
-
-Links and Resources
+## Links and Resources
 	•	submission PR
-	•	Any Links you used as reference
+	•	For random number generator: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 
-Reflections and Comments
-	•	Consider including the answers to your daily journal and submission questions here
-	•	This is also a good place to reflect on the tools and resources used and learned
+## Reflections and Comments
+	•	Tough assignment; was not able to get it to work due to an issue with the random number generator. After talking to two differnt TAs (and conflicting feedback, figured out what I will need to do to refactor the code.). That said, per feedback from my 201 TA (Skyler), I will do this later since I have already received a grade on this and will focus energy and time on lab 07.
+	•	The DOM is definitely a challenge as it is a complex concept - when combined with objects and how it all fits together. But this is also the exciting part as I feel this is a fundamental aspect of JS that is helping me how things work (e.g. methods, functions, etc.).  Each lab is very exciting, even if tough; just wish I can devote more time to it.
+
+## Release Notes
+
+### 2 Nov 20 Release
+Provides a sales page that calculates and appends the DOM to display the daily cookie sales for each of the store location, including the total daily sale for each store.
