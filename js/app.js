@@ -92,19 +92,32 @@ function createTableHeader(){
   trHeader.appendChild(thHeader);
 }
 
-// prototype function to render table rows
+// prototype function to render Settle store table row
 CookieStore.prototype.render = function () {
   // make a tr
-  var trTableRows = document.getElementById('seattle');
-  // 2. create an element
-  var listElement1 = document.createElement('li');
-  var listElement2 = document.createElement('li');
-  // 3. fill it with content
-  listElement1.textContent = this.cookiesPurchasedPerHour;
-  listElement2.textContent = 'Total: ' + this.totalCookiesSold;
-  // 4. append to the DOM
-  cityParent.appendChild(listElement1);
-  cityParent.appendChild(listElement2);
+  var trTableRow = document.createElement('tr')
+  // append tr to tbodyParent
+  var tbodyParent.appendChild(trTableRow);
+  
+  // create property array from the CookieStore object
+  var propertyArray = [this.storeCity, this.cookiesSoldPerHourList, this.dailyCookiesSoldPerStore] 
+
+  // fill in city/store name
+  var tdStoreName = document.createElement('td');
+  tdStoreName.textContent = propertyArray[0]
+  trTableRow.appendChild(tdStoreName);
+
+  // fill in hours
+  for(var i=0; i<this.cookiesSoldPerHourList.length;i++){
+    var tdTableRow = document.createElement('td');
+    tdTableRow.textContent = this.cookiesSoldPerHourList[i];
+    trTableRow.appendChild(tdTableRow);
+  
+  // fill in total sales per store
+  var tdDailyTotalSales = document.createElement('td');
+  tdDailyTotalSales.textContent = propertyArray[2];
+  trTableRow.appendChild(tdDailyTotalSales);
+  }
 }
 
 // Make a table footer row with hourly and grand total for each store;
@@ -119,11 +132,6 @@ var parisStore = new CookieStore('Paris', 20, 38, 2.3);
 var limaStore = new CookieStore('Lima', 2, 16, 4.6);
 
 
-
-
-
-
-
 // Helper function to create random integer between two values, inclusive (source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random )
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
@@ -133,10 +141,10 @@ function getRandomIntInclusive(min, max) {
 }
 
 
-
-
-
 //function calls to execute
-
+createTableHeader();
+for(var i=0; i <allStoresList.length;i++){
+  allStores[i].render();
+}
 
 
