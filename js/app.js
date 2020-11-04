@@ -1,6 +1,16 @@
 'use strict';
 
 /*
+[4 Nov 20 Release]
+1. Goal: update with all the requirements for the sales page
+
+2. Implement:
+a. Footer row with hourly and grand total sales per store (the stretch goal from last lab)
+
+3. Output:
+A table with each store and its hourly sales; include totals by hour across all stores and by total for the day (for each store)
+
+-----------------------------
 [3 Nov 20 Release]
 1. Goals: Render a table with the same data from Lab-6 (2 Nov release)Replace all object literals with a single contructor function that will create a new instance
 
@@ -13,7 +23,7 @@ e. Duplicate code has been removed and DRY principles are evident
 f. Working on a non-master branch for the day, with regular commit history. Basically, every time you get something to work, you should do a commit. But you only need to push every couple of hours or so, tops.
 
 3. Output:
-a. A table with each store and its hourly sales; include totals by hour (across all stores - this is a stretch goal for Lab-7) and by total for the day (for each store)
+A table with each store and its hourly sales; include totals by hour (across all stores - this is a stretch goal for Lab-7) and by total for the day (for each store)
 
 -----------------------------
 [2 Nov 20 Release]
@@ -37,7 +47,7 @@ var storeHours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2p
 var customersPerHourList = [];
 var cookiesSoldPerHourList = [];
 var dailyCookiesSoldPerStore = 0;
-// var hourlyCookiesSoldAllStoresList = []; // this is a stretch goal for Lab-7 per instructor guidelines
+var hourlyCookiesSoldAllStoresList = []; // bottom footer row
 var tbodyParent = document.getElementById('table');
 var allStoresList = [];
 
@@ -56,35 +66,42 @@ function CookieStore(storeCity, minCustomers, maxCustomers, avgCookiesPerCustome
 }
 
 // Helper function to create random integer between two values, inclusive (source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random )
-Cookie.prototype.getRandomIntInclusive = function {
-  min = Math.ceil(this.minCustomers);
-  max = Math.floor(this.maxCustomers);
+CookieStore.prototype.randomCustomersPerHour = function () {
+  var min = Math.ceil(this.minCustomers);
+  var max = Math.floor(this.maxCustomers);
   return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive 
 }
 
-// prototype function to create customersPerHour array
+//prototype function to create customersPerHour array
 CookieStore.prototype.calculateCustomersPerHour = function () {
   for (var i=0; i<storeHours.length; i++){
-    var customersPerHour = getRandomIntInclusive(this.minCustomers, this.maxCustomers);
-    console.log('iteration value ' + [i] + ':' + customersPerHour);
+    var customersPerHour = this.randomCustomersPerHour();
+    //console.log('iteration value ' + [i] + ':' + customersPerHour);
     this.customersPerHourList.push(customersPerHour);
-    console.log('iteration value ' + [i] + ':' + this.customersPerHourList);    
+    //console.log('iteration value ' + [i] + ':' + this.customersPerHourList);    
   }  
+  console.log('THE customers per hour: ' + this.customersPerHourList);
 }
-//console.log('THE customers per hour: ' + this.customersPerHourList);
+
 
 // prototype function to create cookiesSoldPerHour array
 CookieStore.prototype.calculateCookiesSoldPerHour = function () {
   for (var i=0; i<storeHours.length; i++){
-    var cookiesSoldPerHour = Math.ceil(this.customersPerHourList[i] * this.avgCookiesPerCustomer);
+    var cookiesSoldPerHour = Math.round(this.randomCustomersPerHour() * this.avgCookiesPerCustomer);
     this.cookiesSoldPerHourList.push(cookiesSoldPerHour);
-    console.log('cookies sold per hour: ' + this.cookiesSoldPerHourList);
+    //console.log('cookies sold per hour: ' + this.cookiesSoldPerHourList);
+    
+    // counter to sum up total sales per store
     this.dailyCookiesSoldPerStore += cookiesSoldPerHour;
-    console.log('daily total cookie sale: ' + this.dailyCookiesSoldPerStore);
+    //console.log('daily total cookie sale: ' + this.dailyCookiesSoldPerStore);
+
+    // counter to sum up total sales per hour across all stores (i.e. bottom row)
+    hourlyCookiesSoldAllStoresList[i] += this.cookiesSoldPerHourList;
   }
+  console.log('THE cookies sold per hour: ' + this.cookiesSoldPerHourList);
+  console.log('THE daily total cookie sale: ' + this.dailyCookiesSoldPerStore);
 }
-//console.log('THE cookies sold per hour: ' + this.cookiesSoldPerHourList);
-//console.log('THE daily total cookie sale: ' + this.dailyCookiesSoldPerStore);
+
 
 
 // prototype function to render Settle store table row
