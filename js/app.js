@@ -30,50 +30,72 @@ a. A table with each store and its hourly sales; include totals by hour (across 
   c. Post this information on the DOM
 */
 
-// Knowns; global variables
-//var minCustomers, maxCustomers, avgCookiesPerCustomer;
+// Global variables
+// given values: var minCustomers, maxCustomers, avgCookiesPerCustomer, storeHours
 var storeHours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
-var seattle = ['Seattle', 23, 65, 6.3];
-var tokyo = ['Tokyo', 3, 24, 1.2];
-var dubai = ['Dubai', 11, 38, 3.7];
-var paris = ['Paris', 20, 38, 2.3];
-var lima = ['Lima', 2, 16, 4.6];
+// var customersPerHourList = [];
+// var cookiesSoldPerHourList = [];
+// var dailyCookiesSoldPerStore;
+// var hourlyCookiesSoldAllStoresList = []; // this is a stretch goal for Lab-7 per instructor guidelines
+var tbodyParent = document.getElementById('table');
+var allStoresList = [];
 
-
-
-
-function calculateCookiesPurchased(minCustomers, maxCustomers, cookiesPerCustomer) {
-  var cookiesPurchasedPerHour = [];
-  var cookiesPurchasedByHourOfDay = [];
-  //var cookiesPurchasedByHourOfDay = [];
-  for (var i = 0; i < storeHours.length; i++) {
-    cookiesPurchasedPerHour = (getRandomIntInclusive(minCustomers, maxCustomers)) * cookiesPerCustomer;
-    cookiesPurchasedByHourOfDay.push(storeHours[i] + ' : ' + cookiesPurchasedPerHour + ' cookies');
-    var totalCookies = cookiesPurchasedPerHour;
-    totalCookies++
-  }
-  return [cookiesPurchasedByHourOfDay, totalCookies];
-}
-
-var customersPerHour = [];
-var cookiesSoldPerHour = [],
-totalCookiesSoldPerStorePerDay = 0,
-totalCookiesSoldPerHourAllStores = 0,
 
 // Create object constructor for stores
-function CookieStore(storeCity, minCustomers, maxCustomers, avgCookiesPerCustomer) {
+function CookieStore(storeCity, minCustomers, maxCustomers, avgCookiesPerCustomer, customersPerHourList, cookiesSoldPerHourList, dailyCookiesSoldPerStore) {
   this.storeCity = storeCity;
   this.minCustomers = minCustomers;
   this.maxCustomers = maxCustomers;
   this.avgCookiesPerCustomer = avgCookiesPerCustomer;
+  this.customersPerHourList = customersPerHourList;
+  this.cookiesSoldPerHourList = cookiesSoldPerHourList;
+  this.dailyCookiesSoldPerStore = dailyCookiesSoldPerStore;
 
-  customersPerHour.push(this);
-  cookiesSoldPerHour.push(this);
-  
+  allStoresList.push(this);
 }
 
+// prototype function to create customersPerHour array
+CookieStore.prototype.calculateCustomersPerHour = function () {
+  for (var i=0; i<storeHours.length; i++){
+    var customersPerHour = getRandomIntInclusive(this.minCustomers, this.maxCustomers);
+    this.customersPerHourList.push(customersPerHour);
+  }
+}
+
+// prototype function to create cookiesSoldPerHour array
+CookieStore.prototype.calculateCookiesSoldPerHour = function () {
+  for (var i=0; i<storeHours.length; i++){
+    var cookiesSoldPerHour = customersPerHourList[i] * this.avgCookiesPerCustomer;
+    this.cookiesSoldPerHourList.push(cookiesSoldPerHour);
+    this.dailyCookiesSoldPerStore = this.dailyCookiesSoldPerStore + cookiesSoldPerHour;
+  }
+}
+
+// Make a table header row
+function createTableHeader(){
+  // make a tr
+  var trHeader = document.createElement('tr')
+  // make a th for the store location
+  var thHeader = document.createElement('th')
+  thHeader.textContent = "Store Location"
+  
+  // make a th for the store hours
+  for (var i=0; i<storeHours.length,i++) {
+    thHeader = document.createElement('th');
+    thHeader.textContent = storeHour[i];
+    tbodyParent.appendChild(trHeader);
+    trHeader.appendChild(thHeader);
+  }
+  // make th for the store total as the final header
+  thHeader = document.createElement('th');
+  thHeader.textContent = 'Store Hourly Total';
+  trHeader.appendChild(thHeader);
+}
+
+// prototype function to render table rows
 CookieStore.prototype.render = function () {
-  var cityParent = document.getElementById('seattle');
+  // make a tr
+  var trTableRows = document.getElementById('seattle');
   // 2. create an element
   var listElement1 = document.createElement('li');
   var listElement2 = document.createElement('li');
@@ -84,6 +106,21 @@ CookieStore.prototype.render = function () {
   cityParent.appendChild(listElement1);
   cityParent.appendChild(listElement2);
 }
+
+// Make a table footer row with hourly and grand total for each store;
+// Note: per instructor guidelines, the hourly totals across stores is a stretch goal for Lab-7
+
+
+// create object instances for each of the cities/stores
+var seattleStore = new CookieStore('Seattle', 23, 65, 6.3);
+var tokyoStore = new CookieStore('Tokyo', 3, 24, 1.2);
+var dubaiStore = new CookieStore('Dubai', 11, 38, 3.7);
+var parisStore = new CookieStore('Paris', 20, 38, 2.3);
+var limaStore = new CookieStore('Lima', 2, 16, 4.6);
+
+
+
+
 
 
 
@@ -99,11 +136,7 @@ function getRandomIntInclusive(min, max) {
 
 
 
-//call the function for each city
-seattleSales.render();
-tokyoSales.render();
-dubaiSales.render();
-parisSales.render();
-limaSales.render();
+//function calls to execute
+
 
 
