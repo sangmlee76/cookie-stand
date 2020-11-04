@@ -18,3 +18,12 @@ section{
 li{
   margin: 10px;
 }
+
+table{
+  width: 200px;
+}
+
+th, td{
+  padding: 7px 10px 10px 10px;
+  border: 1px solid black;
+}

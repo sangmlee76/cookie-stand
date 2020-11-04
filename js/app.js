@@ -28,6 +28,7 @@ a. A table with each store and its hourly sales; include totals by hour (across 
   a. Provide an array of cookies sold each hour as an unordered list
   b. Provide a sum of the hourly totals for each location
   c. Post this information on the DOM
+-------------------------------
 */
 
 // Global variables
@@ -47,32 +48,43 @@ function CookieStore(storeCity, minCustomers, maxCustomers, avgCookiesPerCustome
   this.minCustomers = minCustomers;
   this.maxCustomers = maxCustomers;
   this.avgCookiesPerCustomer = avgCookiesPerCustomer;
-  //this.customersPerHourList = customersPerHourList;
-  //this.cookiesSoldPerHourList = cookiesSoldPerHourList;
-  //this.dailyCookiesSoldPerStore = dailyCookiesSoldPerStore;
+  this.customersPerHourList = [];
+  this.cookiesSoldPerHourList = [];
+  this.dailyCookiesSoldPerStore = 0;
 
   allStoresList.push(this);
+}
+
+// Helper function to create random integer between two values, inclusive (source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random )
+Cookie.prototype.getRandomIntInclusive = function {
+  min = Math.ceil(this.minCustomers);
+  max = Math.floor(this.maxCustomers);
+  return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive 
 }
 
 // prototype function to create customersPerHour array
 CookieStore.prototype.calculateCustomersPerHour = function () {
   for (var i=0; i<storeHours.length; i++){
     var customersPerHour = getRandomIntInclusive(this.minCustomers, this.maxCustomers);
-    customersPerHourList.push(customersPerHour);    
+    console.log('iteration value ' + [i] + ':' + customersPerHour);
+    this.customersPerHourList.push(customersPerHour);
+    console.log('iteration value ' + [i] + ':' + this.customersPerHourList);    
   }  
 }
-console.log(customersPerHourList);
+//console.log('THE customers per hour: ' + this.customersPerHourList);
 
 // prototype function to create cookiesSoldPerHour array
 CookieStore.prototype.calculateCookiesSoldPerHour = function () {
   for (var i=0; i<storeHours.length; i++){
-    var cookiesSoldPerHour = Math.ceil(customersPerHourList[i] * this.avgCookiesPerCustomer);
-    cookiesSoldPerHourList.push(cookiesSoldPerHour);
-    dailyCookiesSoldPerStore = dailyCookiesSoldPerStore + cookiesSoldPerHour;
+    var cookiesSoldPerHour = Math.ceil(this.customersPerHourList[i] * this.avgCookiesPerCustomer);
+    this.cookiesSoldPerHourList.push(cookiesSoldPerHour);
+    console.log('cookies sold per hour: ' + this.cookiesSoldPerHourList);
+    this.dailyCookiesSoldPerStore += cookiesSoldPerHour;
+    console.log('daily total cookie sale: ' + this.dailyCookiesSoldPerStore);
   }
 }
-console.log('cookies sold per hour: ' + cookiesSoldPerHourList);
-console.log('daily total cookie sale: ' + dailyCookiesSoldPerStore);
+//console.log('THE cookies sold per hour: ' + this.cookiesSoldPerHourList);
+//console.log('THE daily total cookie sale: ' + this.dailyCookiesSoldPerStore);
 
 
 // prototype function to render Settle store table row
@@ -83,22 +95,22 @@ CookieStore.prototype.render = function () {
   tbodyParent.appendChild(trTableRow);
   
   // create property array from the CookieStore object
-  var propertyArray = [this.storeCity, cookiesSoldPerHourList, dailyCookiesSoldPerStore] 
+  var propertyArray = [this.storeCity, this.cookiesSoldPerHourList, this.dailyCookiesSoldPerStore] 
 
-  // fill in city/store name
+  // fill in city/store name as the first row entry
   var tdStoreName = document.createElement('td');
   tdStoreName.textContent = propertyArray[0];
   trTableRow.appendChild(tdStoreName);
 
-  // fill in hours
-  for(var i=0; i<cookiesSoldPerHourList.length;i++){
+  // fill in hourly cookie sales data assigned to each hour of the day
+  for(var i=0; i<this.cookiesSoldPerHourList.length;i++){
     var tdTableRow = document.createElement('td');
-    tdTableRow.textContent = cookiesSoldPerHourList[i];
+    tdTableRow.textContent = this.cookiesSoldPerHourList[i];
     trTableRow.appendChild(tdTableRow);
   
-  // fill in total sales per store
+  // fill in total sales per store as the final row entry
   var tdDailyTotalSales = document.createElement('td');
-  tdDailyTotalSales.textContent = dailyCookiesSoldPerStore;
+  tdDailyTotalSales.textContent = this.dailyCookiesSoldPerStore;
   trTableRow.appendChild(tdDailyTotalSales);
   }
 }
@@ -137,13 +149,7 @@ var parisStore = new CookieStore('Paris', 20, 38, 2.3);
 var limaStore = new CookieStore('Lima', 2, 16, 4.6);
 
 
-// Helper function to create random integer between two values, inclusive (source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random )
-function getRandomIntInclusive(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    console.log(min, max);
-    return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive 
-}
+
 
 
 //function calls to execute
