@@ -15,5 +15,7 @@ Develope a webpage for a salmon cookie store. It is a first major project to own
 
 ## Release Notes
 
+### 3 Nov 20 Release
+Creates a table and populate the same sales data into it.
 ### 2 Nov 20 Release
 Provides a sales page that calculates and appends the DOM to display the daily cookie sales for each of the store location, including the total daily sale for each store.
