@@ -33,23 +33,23 @@ a. A table with each store and its hourly sales; include totals by hour (across 
 // Global variables
 // given values: var minCustomers, maxCustomers, avgCookiesPerCustomer, storeHours
 var storeHours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
-// var customersPerHourList = [];
-// var cookiesSoldPerHourList = [];
-// var dailyCookiesSoldPerStore;
+var customersPerHourList = [];
+var cookiesSoldPerHourList = [];
+var dailyCookiesSoldPerStore = 0;
 // var hourlyCookiesSoldAllStoresList = []; // this is a stretch goal for Lab-7 per instructor guidelines
 var tbodyParent = document.getElementById('table');
 var allStoresList = [];
 
 
 // Create object constructor for stores
-function CookieStore(storeCity, minCustomers, maxCustomers, avgCookiesPerCustomer, customersPerHourList, cookiesSoldPerHourList, dailyCookiesSoldPerStore) {
+function CookieStore(storeCity, minCustomers, maxCustomers, avgCookiesPerCustomer) {
   this.storeCity = storeCity;
   this.minCustomers = minCustomers;
   this.maxCustomers = maxCustomers;
   this.avgCookiesPerCustomer = avgCookiesPerCustomer;
-  this.customersPerHourList = customersPerHourList;
-  this.cookiesSoldPerHourList = cookiesSoldPerHourList;
-  this.dailyCookiesSoldPerStore = dailyCookiesSoldPerStore;
+  //this.customersPerHourList = customersPerHourList;
+  //this.cookiesSoldPerHourList = cookiesSoldPerHourList;
+  //this.dailyCookiesSoldPerStore = dailyCookiesSoldPerStore;
 
   allStoresList.push(this);
 }
@@ -58,53 +58,71 @@ function CookieStore(storeCity, minCustomers, maxCustomers, avgCookiesPerCustome
 CookieStore.prototype.calculateCustomersPerHour = function () {
   for (var i=0; i<storeHours.length; i++){
     var customersPerHour = getRandomIntInclusive(this.minCustomers, this.maxCustomers);
-    this.customersPerHourList.push(customersPerHour);
-  }
+    customersPerHourList.push(customersPerHour);    
+  }  
 }
+console.log(customersPerHourList);
 
 // prototype function to create cookiesSoldPerHour array
 CookieStore.prototype.calculateCookiesSoldPerHour = function () {
   for (var i=0; i<storeHours.length; i++){
-    var cookiesSoldPerHour = customersPerHourList[i] * this.avgCookiesPerCustomer;
-    this.cookiesSoldPerHourList.push(cookiesSoldPerHour);
-    this.dailyCookiesSoldPerStore = this.dailyCookiesSoldPerStore + cookiesSoldPerHour;
+    var cookiesSoldPerHour = Math.ceil(customersPerHourList[i] * this.avgCookiesPerCustomer);
+    cookiesSoldPerHourList.push(cookiesSoldPerHour);
+    dailyCookiesSoldPerStore = dailyCookiesSoldPerStore + cookiesSoldPerHour;
+  }
+}
+console.log('cookies sold per hour: ' + cookiesSoldPerHourList);
+console.log('daily total cookie sale: ' + dailyCookiesSoldPerStore);
+
+
+// prototype function to render Settle store table row
+CookieStore.prototype.render = function () {
+  // make a tr
+  var trTableRow = document.createElement('tr');
+  // append tr to tbodyParent
+  tbodyParent.appendChild(trTableRow);
+  
+  // create property array from the CookieStore object
+  var propertyArray = [this.storeCity, cookiesSoldPerHourList, dailyCookiesSoldPerStore] 
+
+  // fill in city/store name
+  var tdStoreName = document.createElement('td');
+  tdStoreName.textContent = propertyArray[0];
+  trTableRow.appendChild(tdStoreName);
+
+  // fill in hours
+  for(var i=0; i<cookiesSoldPerHourList.length;i++){
+    var tdTableRow = document.createElement('td');
+    tdTableRow.textContent = cookiesSoldPerHourList[i];
+    trTableRow.appendChild(tdTableRow);
+  
+  // fill in total sales per store
+  var tdDailyTotalSales = document.createElement('td');
+  tdDailyTotalSales.textContent = dailyCookiesSoldPerStore;
+  trTableRow.appendChild(tdDailyTotalSales);
   }
 }
 
 // Make a table header row
 function createTableHeader(){
   // make a tr
-  var trHeader = document.createElement('tr')
+  var trHeader = document.createElement('tr');
   // make a th for the store location
-  var thHeader = document.createElement('th')
-  thHeader.textContent = "Store Location"
+  var thHeader = document.createElement('th');
+  thHeader.textContent = "Store Name";
+  trHeader.appendChild(thHeader);
   
   // make a th for the store hours
-  for (var i=0; i<storeHours.length,i++) {
+  for(var i=0; i<storeHours.length; i++) {
     thHeader = document.createElement('th');
-    thHeader.textContent = storeHour[i];
+    thHeader.textContent = storeHours[i];
     tbodyParent.appendChild(trHeader);
     trHeader.appendChild(thHeader);
   }
   // make th for the store total as the final header
   thHeader = document.createElement('th');
-  thHeader.textContent = 'Store Hourly Total';
+  thHeader.textContent = 'Daily Total Sales';
   trHeader.appendChild(thHeader);
-}
-
-// prototype function to render table rows
-CookieStore.prototype.render = function () {
-  // make a tr
-  var trTableRows = document.getElementById('seattle');
-  // 2. create an element
-  var listElement1 = document.createElement('li');
-  var listElement2 = document.createElement('li');
-  // 3. fill it with content
-  listElement1.textContent = this.cookiesPurchasedPerHour;
-  listElement2.textContent = 'Total: ' + this.totalCookiesSold;
-  // 4. append to the DOM
-  cityParent.appendChild(listElement1);
-  cityParent.appendChild(listElement2);
 }
 
 // Make a table footer row with hourly and grand total for each store;
@@ -119,11 +137,6 @@ var parisStore = new CookieStore('Paris', 20, 38, 2.3);
 var limaStore = new CookieStore('Lima', 2, 16, 4.6);
 
 
-
-
-
-
-
 // Helper function to create random integer between two values, inclusive (source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random )
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
@@ -133,10 +146,13 @@ function getRandomIntInclusive(min, max) {
 }
 
 
-
-
-
 //function calls to execute
-
+seattleStore.calculateCustomersPerHour();
+seattleStore.calculateCookiesSoldPerHour();
+createTableHeader();
+seattleStore.render();
+// for(var i=0; i <allStoresList.length;i++){
+//   allStoresList[i].render();
+// }
 
 
