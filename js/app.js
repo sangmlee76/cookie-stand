@@ -1,19 +1,36 @@
 'use strict';
 
 /*
+[3 Nov 20 Release]
+1. Goals: Render a table with the same data from Lab-6 (2 Nov release)Replace all object literals with a single contructor function that will create a new instance
+
+2. Implement:
+a. Each cookie stand location should have its own render() method that creates and appends its row to the table
+b. The header row and footer row are each created in their own stand-alone function
+c. Footer row with hourly and grand total sales per store
+d. Good use of a constructor function; style and syntax are correctly implemented
+e. Duplicate code has been removed and DRY principles are evident
+f. Working on a non-master branch for the day, with regular commit history. Basically, every time you get something to work, you should do a commit. But you only need to push every couple of hours or so, tops.
+
+3. Output:
+a. A table with each store and its hourly sales; include totals by hour (across all stores - this is a stretch goal for Lab-7) and by total for the day (for each store)
+
+-----------------------------
+[2 Nov 20 Release]
 1. Goal: Render an array of cookies sold each hour by store location (e.g. city)
 
 2. Calculate:
   a. The customer per hour using the random number function, given the min/max values.
   b. The simulated amounts of cookies purchased for each hour at each location using average cookies purchased and the random number of customers generated
   c. Store the results for each location in a separate array (could be as a property of the object representing that location)
+  
 3. Output:
   a. Provide an array of cookies sold each hour as an unordered list
   b. Provide a sum of the hourly totals for each location
   c. Post this information on the DOM
 */
 
-// Knowns as global variables
+// Knowns; global variables
 //var minCustomers, maxCustomers, avgCookiesPerCustomer;
 var storeHours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
 var seattle = ['Seattle', 23, 65, 6.3];
@@ -23,13 +40,7 @@ var paris = ['Paris', 20, 38, 2.3];
 var lima = ['Lima', 2, 16, 4.6];
 
 
-// Random integer between two values, inclusive (source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random )
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  console.log(min,max);
-  return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive 
-}
+
 
 function calculateCookiesPurchased(minCustomers, maxCustomers, cookiesPerCustomer) {
   var cookiesPurchasedPerHour = [];
@@ -39,122 +50,53 @@ function calculateCookiesPurchased(minCustomers, maxCustomers, cookiesPerCustome
     cookiesPurchasedPerHour = (getRandomIntInclusive(minCustomers, maxCustomers)) * cookiesPerCustomer;
     cookiesPurchasedByHourOfDay.push(storeHours[i] + ' : ' + cookiesPurchasedPerHour + ' cookies');
     var totalCookies = cookiesPurchasedPerHour;
-    totalCookies ++
+    totalCookies++
   }
   return [cookiesPurchasedByHourOfDay, totalCookies];
 }
 
-// Build Object literals for each store in a city using the known values
+var customersPerHour = [];
+var cookiesSoldPerHour = [],
+totalCookiesSoldPerStorePerDay = 0,
+totalCookiesSoldPerHourAllStores = 0,
 
-var seattleSales = {
-  storeCity: seattle[0],
-  minCustomers: seattle[1],
-  maxCustomers: seattle[2],
-  avgCookiesPerCustomer: seattle[3],
-  customersPerHour: getRandomIntInclusive(this.minCustomers, this.maxCustomers), //*Unresolved BUG* if I hard code numbers, this works but when I use 'this' reference, it breaks and returns a NaN
-  cookiesPurchasedPerHour: calculateCookiesPurchased(this.minCustomers, this.maxCustomers, this.avgCookiesPerCustomer)[0],
-  totalCookiesSold: calculateCookiesPurchased(this.minCustomers, this.maxCustomers, this.avgCookiesPerCustomer)[1],
-  render: function () {
-    var cityParent = document.getElementById('seattle');
-    // 2. create an element
-    var listElement1 = document.createElement('li');
-    var listElement2 = document.createElement('li');
-    // 3. fill it with content
-    listElement1.textContent = this.cookiesPurchasedPerHour;
-    listElement2.textContent = 'Total: ' + this.totalCookiesSold;
-    // 4. append to the DOM
-    cityParent.appendChild(listElement1);
-    cityParent.appendChild(listElement2);
-  }
+// Create object constructor for stores
+function CookieStore(storeCity, minCustomers, maxCustomers, avgCookiesPerCustomer) {
+  this.storeCity = storeCity;
+  this.minCustomers = minCustomers;
+  this.maxCustomers = maxCustomers;
+  this.avgCookiesPerCustomer = avgCookiesPerCustomer;
+
+  customersPerHour.push(this);
+  cookiesSoldPerHour.push(this);
+  
 }
-// Tokyo object literal
-var tokyoSales = {
-  storeCity: tokyo[0],
-  minCustomers: tokyo[1],
-  maxCustomers: tokyo[2],
-  avgCookiesPerCustomer: tokyo[3],
-  customerPerHour: getRandomIntInclusive(this.minCustomers, this.maxCustomers), //*Unresolved BUG* if I hard code numbers, this works but when I use 'this' reference, it breaks and returns a NaN
-  cookiesPurchasedPerHour: calculateCookiesPurchased(this.minCustomers, this.maxCustomers, this.avgCookiesPerCustomer)[0],
-  totalCookiesSold: calculateCookiesPurchased(this.minCustomers, this.maxCustomers, this.avgCookiesPerCustomer)[1],
-  render: function () {
-    var cityParent = document.getElementById('tokyo');
-    // 2. create an element
-    var listElement1 = document.createElement('li');
-    var listElement2 = document.createElement('li');
-    // 3. fill it with content
-    listElement1.textContent = this.cookiesPurchasedPerHour;
-    listElement2.textContent = 'Total: ' + this.totalCookiesSold;
-    // 4. append to the DOM
-    cityParent.appendChild(listElement1);
-    cityParent.appendChild(listElement2);   
-  }
+
+CookieStore.prototype.render = function () {
+  var cityParent = document.getElementById('seattle');
+  // 2. create an element
+  var listElement1 = document.createElement('li');
+  var listElement2 = document.createElement('li');
+  // 3. fill it with content
+  listElement1.textContent = this.cookiesPurchasedPerHour;
+  listElement2.textContent = 'Total: ' + this.totalCookiesSold;
+  // 4. append to the DOM
+  cityParent.appendChild(listElement1);
+  cityParent.appendChild(listElement2);
 }
-// Dubai object literal
-var dubaiSales = {
-  storeCity: dubai[0],
-  minCustomers: dubai[1],
-  maxCustomers: dubai[2],
-  avgCookiesPerCustomer: dubai[3],
-  customerPerHour: getRandomIntInclusive(this.minCustomers, this.maxCustomers), //*Unresolved BUG* if I hard code numbers, this works but when I use 'this' reference, it breaks and returns a NaN
-  cookiesPurchasedPerHour: calculateCookiesPurchased(this.minCustomers, this.maxCustomers, this.avgCookiesPerCustomer)[0],
-  totalCookiesSold: calculateCookiesPurchased(this.minCustomers, this.maxCustomers, this.avgCookiesPerCustomer)[1],
-  render: function () {
-    var cityParent = document.getElementById('dubai');
-    // 2. create an element
-    var listElement1 = document.createElement('li');
-    var listElement2 = document.createElement('li');
-    // 3. fill it with content
-    listElement1.textContent = this.cookiesPurchasedPerHour;
-    listElement2.textContent = 'Total: ' + this.totalCookiesSold;
-    // 4. append to the DOM
-    cityParent.appendChild(listElement1);
-    cityParent.appendChild(listElement2);
-  }
+
+
+
+// Helper function to create random integer between two values, inclusive (source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random )
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    console.log(min, max);
+    return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive 
 }
-// Paris object literal
-var parisSales = {
-  storeCity: paris[0],
-  minCustomers: paris[1],
-  maxCustomers: paris[2],
-  avgCookiesPerCustomer: paris[3],
-  customerPerHour: getRandomIntInclusive(this.minCustomers, this.maxCustomers), //*Unresolved BUG* if I hard code numbers, this works but when I use 'this' reference, it breaks and returns a NaN
-  cookiesPurchasedPerHour: calculateCookiesPurchased(this.minCustomers, this.maxCustomers, this.avgCookiesPerCustomer)[0],
-  totalCookiesSold: calculateCookiesPurchased(this.minCustomers, this.maxCustomers, this.avgCookiesPerCustomer)[1],
-  render: function () {
-    var cityParent = document.getElementById('paris');
-    // 2. create an element
-    var listElement1 = document.createElement('li');
-    var listElement2 = document.createElement('li');
-    // 3. fill it with content
-    listElement1.textContent = this.cookiesPurchasedPerHour;
-    listElement2.textContent = 'Total: ' + this.totalCookiesSold;
-    // 4. append to the DOM
-    cityParent.appendChild(listElement1);
-    cityParent.appendChild(listElement2);
-  }
-}
-// Lima object literal
-var limaSales = {
-  storeCity: lima[0],
-  minCustomers: lima[1],
-  maxCustomers: lima[2],
-  avgCookiesPerCustomer: lima[3],
-  customerPerHour: getRandomIntInclusive(this.minCustomers, this.maxCustomers), //*Unresolved BUG* if I hard code numbers, this works but when I use 'this' reference, it breaks and returns a NaN
-  cookiesPurchasedPerHour: calculateCookiesPurchased(this.minCustomers, this.maxCustomers, this.avgCookiesPerCustomer)[0],
-  totalCookiesSold: calculateCookiesPurchased(this.minCustomers, this.maxCustomers, this.avgCookiesPerCustomer)[1],
-  render: function () {
-    var cityParent = document.getElementById('lima');
-    // 2. create an element
-    var listElement1 = document.createElement('li');
-    var listElement2 = document.createElement('li');
-    // 3. fill it with content
-    listElement1.textContent = this.cookiesPurchasedPerHour;
-    listElement2.textContent = 'Total: ' + this.totalCookiesSold;
-    // 4. append to the DOM
-    cityParent.appendChild(listElement1);
-    cityParent.appendChild(listElement2);
-  }
-}
+
+
+
 
 
 //call the function for each city
