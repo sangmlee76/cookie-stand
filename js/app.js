@@ -1,6 +1,22 @@
 'use strict';
 
 /*
+[5 Nov 20 Release]
+1. Goal: Add a form to the webpage that dynamically adds a new store locations to the table given the core input values: city name, min and max customers per hour, average cookie sales per hour.
+
+2. Implement:
+a. HTML form to accept the information for a new cookie stand; use <fieldset> tag
+b. Create an event handler that creates a new instance of the cookie stand that appends to the table upon submission
+c. Use constructor function to guide what input fields the form should use (hint: consider what is passed in when creating instances)
+d. Ensure the footer row with the total accommodates the addition of each new store
+e. Apply DRY in refactoring your code where appropriate
+f. Use form validatioin by using HTML5 validation tool: https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation
+g. Ensure functions in the code are adhering to the single responsibility rule.
+
+3. Output:
+a. A form to take in input for a new cookie stand
+b. An updated sales table with new store information 
+------------------------------
 [4 Nov 20 Release]
 1. Goal: update with all the requirements for the sales page and initial index.html page with assets provided
 
@@ -44,9 +60,6 @@ A table with each store and its hourly sales; include totals by hour (across all
 // Global variables
 // given values: var minCustomers, maxCustomers, avgCookiesPerCustomer, storeHours
 var storeHours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
-//var customersPerHourList = [];
-//var cookiesSoldPerHourList = [];
-//var dailyCookiesSoldPerStore = 0;
 var cookiesSoldAllStoresGrandTotal = 0; // bottom footer row
 var tbodyParent = document.getElementById('table');
 var allStoresList = [];
@@ -65,23 +78,13 @@ function CookieStore(storeCity, minCustomers, maxCustomers, avgCookiesPerCustome
   allStoresList.push(this);
 }
 
-// Helper function to create random integer between two values, inclusive (source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random )
+// This section computes the values for the hourly sales and then builds multiple arrays to store values
+// prototype function to create random integer between two values, inclusive (source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random )
 CookieStore.prototype.randomCustomersPerHour = function () {
   var min = Math.ceil(this.minCustomers);
   var max = Math.floor(this.maxCustomers);
   return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive 
 }
-
-//prototype function to create customersPerHour array; after an update, this function is no longer needed but keeping it in for now for reference. The calculation for cookies sold per hour is handled directly in the calculateCookiesSoldPerHour prototype function below
-CookieStore.prototype.calculateCustomersPerHour = function () {
-  for (var i = 0; i < storeHours.length; i++) {
-    var customersPerHour = this.randomCustomersPerHour();
-    //console.log('iteration value ' + [i] + ':' + customersPerHour);
-    this.customersPerHourList.push(customersPerHour);
-    //console.log('iteration value ' + [i] + ':' + this.customersPerHourList);    
-  }
-}
-
 
 // prototype function to create cookiesSoldPerHour array
 CookieStore.prototype.calculateCookiesSoldPerHour = function () {
@@ -100,17 +103,13 @@ CookieStore.prototype.calculateCookiesSoldPerHour = function () {
   console.log('TOTAL hourly cookies sold across stores: ' + cookiesSoldAllStoresGrandTotal);
 }
 
-
-
+// This section builds the sales data table
 // prototype function to render Seattle store table row
 CookieStore.prototype.render = function () {
   // make a tr
   var trTableRow = document.createElement('tr');
   // append tr to tbodyParent
   tbodyParent.appendChild(trTableRow);
-
-  // create property array from the CookieStore object; initially created but may not need it anymore; keeping it fore reference for now and will delete before production.
-  //var propertyArray = [this.storeCity, this.cookiesSoldPerHourList, this.dailyCookiesSoldPerStore]; 
 
   // fill in city/store name as the first row entry
   var tdStoreName = document.createElement('td');
@@ -178,29 +177,30 @@ function createTableFooter() {
   trFooter.appendChild(thFooter);
 }
 
-// create object instances for each of the cities/stores
+// This section creates object instances for each of the cities/stores
 var seattleStore = new CookieStore('Seattle', 23, 65, 6.3);
 var tokyoStore = new CookieStore('Tokyo', 3, 24, 1.2);
 var dubaiStore = new CookieStore('Dubai', 11, 38, 3.7);
 var parisStore = new CookieStore('Paris', 20, 38, 2.3);
 var limaStore = new CookieStore('Lima', 2, 16, 4.6);
 
-// this function uses the object reference for each store to build the hourly sales array for each store
+// This section provides helper functions 
+// this is a helper function; it uses the object reference for each store to build the hourly sales array for each store
 function calculateEachStoreSales(){
   for(var i=0; i <allStoresList.length; i++) {
     allStoresList[i].calculateCookiesSoldPerHour();
   }
 }
 
-// this function uses the object reference for each store to render the table with the information within each object
+// this is a helper function; it uses the object reference for each store to render the table with the information within each object
 function renderStores() {
   for(var i=0; i < allStoresList.length;i++){
     allStoresList[i].render();
   }
 }
 
-
-//function calls to build tables for each store
+// This is the execution section
+// invokes function calls to build tables for each store
 createTableHeader();
 calculateEachStoreSales();
 renderStores();
