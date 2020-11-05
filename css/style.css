@@ -1,13 +1,55 @@
+body{
+  background-color: bisque; 
+
+}
+
+header{
+  margin: 20px 200px;
+
+}
+
+/* this is not working; can't figure out why */
+main{
+  background-image: url("img/cutter.jpeg");
+  background-repeat: repeat;
+}
+
 h1{
-  margin: 20px;
-  width: 200px;
-  height: 100px;
+  font-size: x-large;
+  margin: auto;
+  width: 400px;
+  height: 50px;
+  border: 10px solid orange;
+  text-align: center;
+  line-height: 50px;
+  padding: 20px;
+  color: purple;
+  font-style: bold;
+
 }
-footer{
-  margin: 100px 20px;
-  width: 200px;
-  height: 100px;
+
+nav{
+  margin: auto;  
 }
+
+h4{
+  margin: auto;
+  width: 400px;
+  height: 50px;
+  border: 10px;
+  text-align: center
+}
+
+
+li{
+  width: 30px;
+  height: 20px;
+  display: inline-table;
+  margin: 10px 15px;
+  text-align: center;
+}
+
+
 
 section{
   margin: 20px;
@@ -15,15 +57,53 @@ section{
   height: 20px;
 }
 
-li{
-  margin: 10px;
-}
 
 table{
   width: 200px;
+  margin: 60px;
 }
 
 th, td{
   padding: 7px 10px 10px 10px;
   border: 1px solid black;
+  
+}
+
+th{
+  font-weight: bold;
+}
+a{
+  margin: 20px;
+}
+
+img.sammy{
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  width: 70%
+
+}
+
+.footerlist{
+  
+  display: inline-table;
+  text-align: center;
+  height: 50px;
+  width: 200px;
+  
+}
+
+footer{
+  margin: 200px 270px;
+  width: 500px;
+  height: 100px;
+}
+
+#salesToHome{
+  margin: 200px 350px;
+  width: 400px;
+  height: 20px;
 }
