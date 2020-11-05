@@ -2,7 +2,7 @@
 
 /*
 [4 Nov 20 Release]
-1. Goal: update with all the requirements for the sales page
+1. Goal: update with all the requirements for the sales page and initial index.html page with assets provided
 
 2. Implement:
 a. Footer row with hourly and grand total sales per store (the stretch goal from last lab)
