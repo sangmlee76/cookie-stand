@@ -61,6 +61,7 @@ section{
 table{
   width: 200px;
   margin: 60px;
+  text-align: center;
 }
 
 th, td{
@@ -107,3 +108,12 @@ footer{
   width: 400px;
   height: 20px;
 }
+
+form{
+  border: 1px solid black;
+  width: 400px;
+  height: 100px;
+  padding: 20px;
+  margin: 50px 60px;
+}
+

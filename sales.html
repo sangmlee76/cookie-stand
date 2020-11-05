@@ -1,78 +1,47 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link href="css/reset.css" rel="stylesheet" type="text/css" />
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
-    <title> Salmon Cookie Sales </title>
-  </head>
-  <body>
-    <header>
-      <h1> Salmon Cookie Sales</h1>
-      
-    </header>
-    <main>
-      
-      <table>
-        <tbody id="table"></tbody>          
-      </table> 
-      
-      <!-- HTML table for reference
-      <table>
-        <tbody>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Color</th>
-          <th>Age</th>
-        </tr>
-    
-        <tr>
-          <td>fluffy</td>
-          <td>cat</td>
-          <td>white</td>
-          <td>1</td>
-        </tr>
-    
-        <tr>
-          <td>Tom</td>
-          <td>cat</td>
-          <td>orange</td>
-          <td>2</td>
-        </tr>
-    
-        <tr>
-          <td>Spot</td>
-          <td>dog</td>
-          <td>brown</td>
-          <td>6</td>
-        </tr>
-    
-        </tbody>
-      </table> -->
 
-      <!-- old html used for object literal rendering
-      <section>
-        <h3>Seattle Sales</h3>
-          <ul id="seattle"></ul> 
-      </section>
-      <section>
-        <h3>Tokyo Sales</h3>
-        <ul id="tokyo"></ul> 
-      </section>
-      <section>
-        <h3>Dubai Sales</h3>
-          <ul id="dubai"></ul>
-      </section> 
-      <section>
-        <h3>Paris Sales</h3>
-          <ul id="paris"></ul>
-      </section>  
-      <section>
-        <h3>Lima Sales</h3>
-          <ul id="lima"></ul>
-      </section> -->
-    </main>
-    <footer id="salesToHome"> <a href="index.html" > Back to Salmon Cookie Main Page</a> </footer>
-    <script src="js/app.js" type="text/javascript"></script>
-  </body>
+<head>
+  <link href="css/reset.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <title> Salmon Cookie Sales </title>
+</head>
+
+<body>
+  <header>
+    <h1> Salmon Cookie Sales Dashboard</h1>
+  </header>
+  <main>
+    <!-- Form to create a new store -->
+    <form id="newstoreform">
+      <fieldset>
+        <label> Store Location:
+          <input id="location" name="location" type="text" size="30" />
+        </label>
+        <br />
+        <label> Minimum customers per hour:
+          <input id="mincustomers" name="mincustomers" type="number" />
+        </label>
+        <br />
+        <label> Maximum customers per hour:
+          <input id="maxcustomers" name="maxcustomers" type="number" />
+        </label>
+        <br />
+        <label> Average cookies per customer:
+          <input id="cookiespercustomer" name="cookiespercustomer" type="number" />
+        </label>
+        <br />
+      </fieldset>
+      <input id="submit" type="button" name="submit" value="Submit" />
+      <input id="reset" type="button" name="reset" value="Reset" />
+    </form>
+    <!-- Table for sales -->
+    <table>
+      <tbody id="table"></tbody>
+    </table>
+  </main>
+  <footer id="salesToHome"> <a href="index.html"> Back to Salmon Cookie Main Page</a> </footer>
+  <script src="js/app.js" type="text/javascript"></script>
+</body>
+
 </html>
