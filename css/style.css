@@ -8,11 +8,11 @@ header{
 
 }
 
-/* this is not working; can't figure out why */
+/* this is not working; can't figure out why 
 main{
   background-image: url("img/cutter.jpeg");
   background-repeat: repeat;
-}
+} */
 
 h1{
   font-size: x-large;

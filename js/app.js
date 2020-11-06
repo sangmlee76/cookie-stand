@@ -129,7 +129,19 @@ CookieStore.prototype.render = function () {
   trTableRow.appendChild(tdDailyTotalSales);
 }
 
-// Make a table header row
+// This section creates object instances for each of the cities/stores
+var seattleStore = new CookieStore('Seattle', 23, 65, 6.3);
+var tokyoStore = new CookieStore('Tokyo', 3, 24, 1.2);
+var dubaiStore = new CookieStore('Dubai', 11, 38, 3.7);
+var parisStore = new CookieStore('Paris', 20, 38, 2.3);
+var limaStore = new CookieStore('Lima', 2, 16, 4.6);
+
+
+// clear the table to re-render
+
+
+// This section provides helper functions 
+// Make a helper function to build a table header row
 function createTableHeader() {
   // make a tr
   var trHeader = document.createElement('tr');
@@ -151,7 +163,39 @@ function createTableHeader() {
   trHeader.appendChild(thHeader);
 }
 
-// Make a table footer row with hourly and grand total for each store
+
+// Create the event listener
+var createNewStoreEl = document.getElementById('newstoreform');
+createNewStoreEl.addEventListener('submit', handleNewStoreFormSubmit);
+
+// Make a helper function to create the event handler
+function handleNewStoreFormSubmit(event){
+  //standard code to prevent deletion of data
+  event.preventDefault();
+  
+  // console.log to debug event handler execution
+  // console.log('is the event coming through');
+  // if(event.target){
+  //   console.log('the event.target is: ', event.target);
+  //   console.log('the event.target.location is: ', event.target.location);
+  //   console.log('the event.target.location.value is ', event.target.location.value);
+  //   console.log('the event.target.mincustomer is: ', event.target.mincustomers);
+  //   console.log('the event.target.mincustomer.value is ', event.target.mincustomers.value);   
+  //   console.log('the event.target.maxcustomer is: ', event.target.maxcustomers);
+  //   console.log('the event.target.maxcustomer.value is ', event.target.maxcustomers.value);  
+  //   console.log('the event.target.cookiespercustomer is: ', event.target.cookiespercustomer);
+  //   console.log('the event.target.cookiespercustomer.value is ', event.target.cookiespercustomer.value);
+  // }
+
+  var newStoreCity = event.target.location.value;
+  var newMinCustomers = event.target.mincustomers.value;
+  var newMaxCustomers = event.target.maxcustomers.value;
+  var newAvgCookiesPerCustomer = event.target.cookiespercustomer.value;
+
+  new CookieStore(newStoreCity, newMinCustomers, newMaxCustomers, newAvgCookiesPerCustomer);
+}
+
+// Make a helper function to build the table footer row with hourly and grand total for each store
 function createTableFooter() {
   // make a tr
   var trFooter = document.createElement('tr');
@@ -176,15 +220,6 @@ function createTableFooter() {
   thFooter.textContent = cookiesSoldAllStoresGrandTotal; //need to input the variable for the sum of all totals
   trFooter.appendChild(thFooter);
 }
-
-// This section creates object instances for each of the cities/stores
-var seattleStore = new CookieStore('Seattle', 23, 65, 6.3);
-var tokyoStore = new CookieStore('Tokyo', 3, 24, 1.2);
-var dubaiStore = new CookieStore('Dubai', 11, 38, 3.7);
-var parisStore = new CookieStore('Paris', 20, 38, 2.3);
-var limaStore = new CookieStore('Lima', 2, 16, 4.6);
-
-// This section provides helper functions 
 // this is a helper function; it uses the object reference for each store to build the hourly sales array for each store
 function calculateEachStoreSales(){
   for(var i=0; i <allStoresList.length; i++) {
@@ -201,8 +236,8 @@ function renderStores() {
 
 // This is the execution section
 // invokes function calls to build tables for each store
-createTableHeader();
 calculateEachStoreSales();
+createTableHeader();
 renderStores();
 createTableFooter();
 
