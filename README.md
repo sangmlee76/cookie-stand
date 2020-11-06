@@ -6,8 +6,9 @@ Develope a webpage for a salmon cookie store. It is a first major project to own
 ## Author: Sang Lee | sanglee76@yahoo.com
 
 ## Links and Resources
-	•	submission PR
-	•	For random number generator: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
++ submission PR
++ For random number generator: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
++ For help with reset button: https://www.quora.com/How-do-I-reset-the-text-field-in-a-form-using-javaScript
 
 ## Reflections and Comments
 + Tough assignment; was not able to get it to work due to an issue with the random number generator. After talking to two differnt TAs (and conflicting feedback, figured out what I will need to do to refactor the code.). That said, per feedback from my 201 TA (Skyler), I will do this later since I have already received a grade on this and will focus energy and time on lab 07.

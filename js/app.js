@@ -54,7 +54,8 @@ A table with each store and its hourly sales; include totals by hour (across all
   a. Provide an array of cookies sold each hour as an unordered list
   b. Provide a sum of the hourly totals for each location
   c. Post this information on the DOM
--------------------------------
+  
+------------------------------- MAIN CODE BODY ----------------------------------------
 */
 
 // Global variables
@@ -104,8 +105,9 @@ CookieStore.prototype.calculateCookiesSoldPerHour = function () {
 }
 
 // This section builds the sales data table
-// prototype function to render Seattle store table row
+// prototype function to render main table rows with sales data
 CookieStore.prototype.render = function () {
+  this.calculateCookiesSoldPerHour();  // this was added here during help from TA, this function was originally called at execution call at the bottom. DO NOT do that; it should be integrated into the main code body and be called as it is needed.  For example, we need the hourly sales array because we will render it below in the for-loop.
   // make a tr
   var trTableRow = document.createElement('tr');
   // append tr to tbodyParent
@@ -116,7 +118,7 @@ CookieStore.prototype.render = function () {
   tdStoreName.textContent = this.storeCity;
   trTableRow.appendChild(tdStoreName);
 
-  // fill in hourly cookie sales data assigned to each hour of the day
+  // fill in hourly cookie sales data assigned to each hour of the day; this section 
   for (var i = 0; i < this.cookiesSoldPerHourList.length; i++) {
     var tdTableRow = document.createElement('td');
     tdTableRow.textContent = this.cookiesSoldPerHourList[i]; 
@@ -130,17 +132,17 @@ CookieStore.prototype.render = function () {
 }
 
 // This section creates object instances for each of the cities/stores
-var seattleStore = new CookieStore('Seattle', 23, 65, 6.3);
-var tokyoStore = new CookieStore('Tokyo', 3, 24, 1.2);
-var dubaiStore = new CookieStore('Dubai', 11, 38, 3.7);
-var parisStore = new CookieStore('Paris', 20, 38, 2.3);
-var limaStore = new CookieStore('Lima', 2, 16, 4.6);
+new CookieStore('Seattle', 23, 65, 6.3);
+new CookieStore('Tokyo', 3, 24, 1.2);
+new CookieStore('Dubai', 11, 38, 3.7);
+new CookieStore('Paris', 20, 38, 2.3);
+new CookieStore('Lima', 2, 16, 4.6);
 
-
-// clear the table to re-render
 
 
 // This section provides helper functions 
+
+
 // Make a helper function to build a table header row
 function createTableHeader() {
   // make a tr
@@ -163,29 +165,30 @@ function createTableHeader() {
   trHeader.appendChild(thHeader);
 }
 
-
-// Create the event listener
-var createNewStoreEl = document.getElementById('newstoreform');
-createNewStoreEl.addEventListener('submit', handleNewStoreFormSubmit);
+// resets all form input fields if clicked. Source: https://www.quora.com/How-do-I-reset-the-text-field-in-a-form-using-javaScript
+function handleFormReset(){
+  var resetButton = document.getElementById("reset");
+  if (resetButton){
+    resetButton.value = '';
+  }
+}
 
 // Make a helper function to create the event handler
 function handleNewStoreFormSubmit(event){
   //standard code to prevent deletion of data
   event.preventDefault();
-  
-  // console.log to debug event handler execution
-  // console.log('is the event coming through');
-  // if(event.target){
-  //   console.log('the event.target is: ', event.target);
-  //   console.log('the event.target.location is: ', event.target.location);
-  //   console.log('the event.target.location.value is ', event.target.location.value);
-  //   console.log('the event.target.mincustomer is: ', event.target.mincustomers);
-  //   console.log('the event.target.mincustomer.value is ', event.target.mincustomers.value);   
-  //   console.log('the event.target.maxcustomer is: ', event.target.maxcustomers);
-  //   console.log('the event.target.maxcustomer.value is ', event.target.maxcustomers.value);  
-  //   console.log('the event.target.cookiespercustomer is: ', event.target.cookiespercustomer);
-  //   console.log('the event.target.cookiespercustomer.value is ', event.target.cookiespercustomer.value);
-  // }
+ 
+  if(event.target){
+    console.log('the event.target is: ', event.target);
+    console.log('the event.target.location is: ', event.target.location);
+    console.log('the event.target.location.value is ', event.target.location.value);
+    console.log('the event.target.mincustomer is: ', event.target.mincustomers);
+    console.log('the event.target.mincustomer.value is ', event.target.mincustomers.value);   
+    console.log('the event.target.maxcustomer is: ', event.target.maxcustomers);
+    console.log('the event.target.maxcustomer.value is ', event.target.maxcustomers.value);  
+    console.log('the event.target.cookiespercustomer is: ', event.target.cookiespercustomer);
+    console.log('the event.target.cookiespercustomer.value is ', event.target.cookiespercustomer.value);
+  }
 
   var newStoreCity = event.target.location.value;
   var newMinCustomers = event.target.mincustomers.value;
@@ -193,6 +196,7 @@ function handleNewStoreFormSubmit(event){
   var newAvgCookiesPerCustomer = event.target.cookiespercustomer.value;
 
   new CookieStore(newStoreCity, newMinCustomers, newMaxCustomers, newAvgCookiesPerCustomer);
+  renderStores();
 }
 
 // Make a helper function to build the table footer row with hourly and grand total for each store
@@ -229,17 +233,22 @@ function calculateEachStoreSales(){
 
 // this is a helper function; it uses the object reference for each store to render the table with the information within each object
 function renderStores() {
+  tbodyParent.innerHTML = '';  // need this to clear the parent element in order to rewrite the entire table each time we have a new entry
+  createTableHeader();  // same thing here; previously, I was calling this at the very end but need to integrate this into the main body of the code and call it when it is needed.
   for(var i=0; i < allStoresList.length;i++){
     allStoresList[i].render();
   }
+  createTableFooter();  // same thing here; previously, I was calling this at the very end but need to integrate this into the main body of the code and call it when it is needed.
 }
 
-// This is the execution section
-// invokes function calls to build tables for each store
-calculateEachStoreSales();
-createTableHeader();
+// This is the execution section; invokes function call to build tables for each store
 renderStores();
-createTableFooter();
+
+
+// The final section is for event listeners; we created one event listener for the submit button
+var createNewStoreEl = document.getElementById('newstoreform');
+createNewStoreEl.addEventListener('submit', handleNewStoreFormSubmit);
+
 
 
 
