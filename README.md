@@ -1,7 +1,7 @@
 # LAB - 06, 07, 08b, 09, 10
 
 ## Salmon Cookies
-Develope a webpage for a salmon cookie store. It is a first major project to own the full webapp development.
+Develope a webpage for Pat's salmon cookie store. It is a first major project to own the full webapp development. Link to problem - https://codefellows.github.io/code-201-guide/curriculum/class-06/lab/
 
 ## Author: Sang Lee | sanglee76@yahoo.com
 
@@ -16,6 +16,8 @@ Develope a webpage for a salmon cookie store. It is a first major project to own
 + Iteratively updated the project using branching; very cool.
 
 ## Release Notes
+### 5 Nov 20 Releas:
+Added a form to create new store. The form allows the user to add a new store and calculats its sales based on input provided: city, max customers per hour, min customers per hour, average cookies sold to customer per hour.
 ### 4 Nov 20 Release:
 Adds a footer row with a total of hourly sales across all stores and a grand total of all sales in the last row, last column cell.
 ### 3 Nov 20 Release:
