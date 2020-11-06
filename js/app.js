@@ -54,7 +54,7 @@ A table with each store and its hourly sales; include totals by hour (across all
   a. Provide an array of cookies sold each hour as an unordered list
   b. Provide a sum of the hourly totals for each location
   c. Post this information on the DOM
-  
+
 ------------------------------- MAIN CODE BODY ----------------------------------------
 */
 
@@ -99,9 +99,9 @@ CookieStore.prototype.calculateCookiesSoldPerHour = function () {
     
   }
   // console.log for debugging; DELETE before production
-  console.log('TOTAL cookies sold per hour: ' + this.cookiesSoldPerHourList);
-  console.log('TOTAL daily cookie sale: ' + this.dailyCookiesSoldPerStore);
-  console.log('TOTAL hourly cookies sold across stores: ' + cookiesSoldAllStoresGrandTotal);
+  // console.log('TOTAL cookies sold per hour: ' + this.cookiesSoldPerHourList);
+  // console.log('TOTAL daily cookie sale: ' + this.dailyCookiesSoldPerStore);
+  // console.log('TOTAL hourly cookies sold across stores: ' + cookiesSoldAllStoresGrandTotal);
 }
 
 // This section builds the sales data table
@@ -130,7 +130,6 @@ CookieStore.prototype.render = function () {
   tdDailyTotalSales.textContent = this.dailyCookiesSoldPerStore;
   trTableRow.appendChild(tdDailyTotalSales);
 }
-
 // This section creates object instances for each of the cities/stores
 new CookieStore('Seattle', 23, 65, 6.3);
 new CookieStore('Tokyo', 3, 24, 1.2);
@@ -141,8 +140,6 @@ new CookieStore('Lima', 2, 16, 4.6);
 
 
 // This section provides helper functions 
-
-
 // Make a helper function to build a table header row
 function createTableHeader() {
   // make a tr
@@ -178,17 +175,17 @@ function handleNewStoreFormSubmit(event){
   //standard code to prevent deletion of data
   event.preventDefault();
  
-  if(event.target){
-    console.log('the event.target is: ', event.target);
-    console.log('the event.target.location is: ', event.target.location);
-    console.log('the event.target.location.value is ', event.target.location.value);
-    console.log('the event.target.mincustomer is: ', event.target.mincustomers);
-    console.log('the event.target.mincustomer.value is ', event.target.mincustomers.value);   
-    console.log('the event.target.maxcustomer is: ', event.target.maxcustomers);
-    console.log('the event.target.maxcustomer.value is ', event.target.maxcustomers.value);  
-    console.log('the event.target.cookiespercustomer is: ', event.target.cookiespercustomer);
-    console.log('the event.target.cookiespercustomer.value is ', event.target.cookiespercustomer.value);
-  }
+  // if(event.target){
+  //   console.log('the event.target is: ', event.target);
+  //   console.log('the event.target.location is: ', event.target.location);
+  //   console.log('the event.target.location.value is ', event.target.location.value);
+  //   console.log('the event.target.mincustomer is: ', event.target.mincustomers);
+  //   console.log('the event.target.mincustomer.value is ', event.target.mincustomers.value);   
+  //   console.log('the event.target.maxcustomer is: ', event.target.maxcustomers);
+  //   console.log('the event.target.maxcustomer.value is ', event.target.maxcustomers.value);  
+  //   console.log('the event.target.cookiespercustomer is: ', event.target.cookiespercustomer);
+  //   console.log('the event.target.cookiespercustomer.value is ', event.target.cookiespercustomer.value);
+  // }
 
   var newStoreCity = event.target.location.value;
   var newMinCustomers = event.target.mincustomers.value;
