@@ -1,4 +1,4 @@
-# LAB - 06, 07, 08b, 09, 10
+# LABs - 06, 07, 08b, 09, 10
 
 ## Salmon Cookies
 Develope a webpage for Pat's salmon cookie store. It is a first major project to own the full webapp development. Link to problem - https://codefellows.github.io/code-201-guide/curriculum/class-06/lab/
