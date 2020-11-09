@@ -1,43 +1,43 @@
 body{
+  max-width: 960px;
+  min-width: 820px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: auto 0;
   background-color: bisque; 
 
 }
 
 header{
-  margin: 20px 200px;
+  margin: 20px 100px;
 
 }
 
-/* this is not working; can't figure out why 
-main{
-  background-image: url("img/cutter.jpeg");
-  background-repeat: repeat;
-} */
 
 h1{
-  font-size: x-large;
-  margin: auto;
-  width: 400px;
+  font-size: 25px;
+  width: 510px;
   height: 50px;
   border: 10px solid orange;
-  text-align: center;
+  /* text-align: center; */
   line-height: 50px;
   padding: 20px;
   color: purple;
   font-style: bold;
-
+  background-color: salmon;
+  font-family: 'Lobster', cursive;
+  text-align: center;
+  /* margin: 20px 100px; */
 }
 
-nav{
-  margin: auto;  
-}
 
 h4{
-  margin: auto;
-  width: 400px;
+  width: 570px;
   height: 50px;
   border: 10px;
-  text-align: center
+  text-align: center;
+  font-family: 'Courgette', cursive;
+  color: brown;
 }
 
 
@@ -47,6 +47,8 @@ li{
   display: inline-table;
   margin: 10px 15px;
   text-align: center;
+  font-family: 'Indie Flower', cursive;
+  color: orangered
 }
 
 
@@ -57,11 +59,12 @@ section{
   height: 20px;
 }
 
-
 table{
   width: 200px;
-  margin: 60px;
+  margin: 50px auto;
   text-align: center;
+  background-color: lightyellow;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 th, td{
@@ -73,47 +76,134 @@ th, td{
 th{
   font-weight: bold;
 }
+
 a{
   margin: 20px;
 }
 
-img.sammy{
-  max-width: 100%;
-  height: auto;
+#sammy{
+  
+  height: 100px;
+  width: 80%;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  /* margin-left: auto;
+  margin-right: auto; */
   margin-top: 50px;
-  width: 70%
+  /* width: 70% */
+}
+
+h3{
+  width: 500px;
+  height: 50px;
+  margin: 250px 0px 0px 30px;
+  font-weight: bolder;
+  font-size: 20px;
+}
+
+#stores{
+  margin: 5px auto;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 
 }
 
-.footerlist{
-  
-  display: inline-table;
+#seattle{
+  border: 5px solid salmon;
+  margin: 70px 5px 0px 20px;
+  height: 100px;
+  width: 200px;
+  padding: 10px;
+  float: left;
+  font-family: 'Courgette', cursive;
+}
+
+#tokyo{
+  border: 5px solid salmon;
+  margin: 5px 5px 0px 5px;
+  height: 100px;
+  width: 200px;
+  padding: 10px;
+  float: left;
+  font-family: 'Courgette', cursive;
+}
+
+#dubai{
+  border: 5px solid salmon;
+  margin: 5px 5px 0px 5px;
+  height: 100px;
+  width: 200px;
+  padding: 10px;
+  float: left;
+  font-family: 'Courgette', cursive;
+}
+
+#lima{
+  border: 5px solid salmon;
+  margin: 5px 5px 0px 5px;
+  height: 100px;
+  width: 200px;
+  padding: 10px;
+  float: left;
+  font-family: 'Courgette', cursive;
+
+}
+
+#paris{
+  border: 5px solid salmon;
+  margin: 5px 5px 0px 5px;
+  height: 100px;
+  width: 200px;
+  padding: 10px;
+  float: left;
+  font-family: 'Courgette', cursive;
+
+}
+
+footer #footerlist{  
+  /* display: inline-table; */
   text-align: center;
   height: 50px;
-  width: 200px;
+  width: 570px;
+  margin-top: 340px;
+  margin-left: 100px;
   
 }
 
-footer{
-  margin: 200px 270px;
-  width: 500px;
-  height: 100px;
+p{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  width: 650px;
+  padding: 15px;
+  margin: 200px auto;
+  border: 20px solid gray;
+  border-style: ridge;
+  background-color: indigo;
+  color: salmon;
+
+}
+
+.footerlinks{
+  margin-top: 10px;
+  height: 20px;
+  width: 200px;
 }
 
 #salesToHome{
-  margin: 200px 350px;
-  width: 400px;
-  height: 20px;
+  text-align: center;
 }
 
 form{
   border: 1px solid black;
-  width: 400px;
+  width: 530px;
   height: 100px;
   padding: 20px;
-  margin: 50px 60px;
+  margin: auto;
+  background-color: peru;
+}
+
+#salesheader{
+  margin: auto;
+}
+
+#salesbody{
+  background-color: rgba(192, 112, 216, 0.103);
 }
 

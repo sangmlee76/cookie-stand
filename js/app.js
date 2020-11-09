@@ -1,5 +1,6 @@
 'use strict';
 
+function projectNotes(){
 /*
 [5 Nov 20 Release]
 1. Goal: Add a form to the webpage that dynamically adds a new store locations to the table given the core input values: city name, min and max customers per hour, average cookie sales per hour.
@@ -55,8 +56,10 @@ A table with each store and its hourly sales; include totals by hour (across all
   b. Provide a sum of the hourly totals for each location
   c. Post this information on the DOM
 
-------------------------------- MAIN CODE BODY ----------------------------------------
 */
+}
+
+/*** START ***/
 
 // Global variables
 // given values: var minCustomers, maxCustomers, avgCookiesPerCustomer, storeHours
@@ -89,6 +92,10 @@ CookieStore.prototype.randomCustomersPerHour = function () {
 
 // prototype function to create cookiesSoldPerHour array
 CookieStore.prototype.calculateCookiesSoldPerHour = function () {
+  // clears the array to allow update with new city additions
+  this.customersPerHourList = [];
+  this.cookiesSoldPerHourList = [];
+  
   for (var i = 0; i < storeHours.length; i++) {
     var cookiesSoldPerHour = Math.round(this.randomCustomersPerHour() * this.avgCookiesPerCustomer);
     this.cookiesSoldPerHourList.push(cookiesSoldPerHour);
@@ -117,7 +124,7 @@ CookieStore.prototype.render = function () {
   var tdStoreName = document.createElement('td');
   tdStoreName.textContent = this.storeCity;
   trTableRow.appendChild(tdStoreName);
-
+ 
   // fill in hourly cookie sales data assigned to each hour of the day; this section 
   for (var i = 0; i < this.cookiesSoldPerHourList.length; i++) {
     var tdTableRow = document.createElement('td');
@@ -194,6 +201,11 @@ function handleNewStoreFormSubmit(event){
 
   new CookieStore(newStoreCity, newMinCustomers, newMaxCustomers, newAvgCookiesPerCustomer);
   renderStores();
+  
+  
+  // resets the form after new submission
+  var newForm = document.getElementById("newstoreform");
+  newForm.reset;
 }
 
 // Make a helper function to build the table footer row with hourly and grand total for each store
@@ -232,6 +244,7 @@ function calculateEachStoreSales(){
 function renderStores() {
   tbodyParent.innerHTML = '';  // need this to clear the parent element in order to rewrite the entire table each time we have a new entry
   createTableHeader();  // same thing here; previously, I was calling this at the very end but need to integrate this into the main body of the code and call it when it is needed.
+
   for(var i=0; i < allStoresList.length;i++){
     allStoresList[i].render();
   }
