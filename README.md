@@ -16,6 +16,9 @@ Develope a webpage for Pat's salmon cookie store. It is a first major project to
 + Iteratively updated the project using branching; very cool.
 
 ## Release Notes
+### 8 Nov 20 Release:
+Final formatting and styling to complete the project.
+
 ### 5 Nov 20 Releas:
 Added a form to create new store. The form allows the user to add a new store and calculats its sales based on input provided: city, max customers per hour, min customers per hour, average cookies sold to customer per hour.
 ### 4 Nov 20 Release:

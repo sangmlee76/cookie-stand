@@ -182,17 +182,17 @@ function handleNewStoreFormSubmit(event){
   //standard code to prevent deletion of data
   event.preventDefault();
  
-  // if(event.target){
-  //   console.log('the event.target is: ', event.target);
-  //   console.log('the event.target.location is: ', event.target.location);
-  //   console.log('the event.target.location.value is ', event.target.location.value);
-  //   console.log('the event.target.mincustomer is: ', event.target.mincustomers);
-  //   console.log('the event.target.mincustomer.value is ', event.target.mincustomers.value);   
-  //   console.log('the event.target.maxcustomer is: ', event.target.maxcustomers);
-  //   console.log('the event.target.maxcustomer.value is ', event.target.maxcustomers.value);  
-  //   console.log('the event.target.cookiespercustomer is: ', event.target.cookiespercustomer);
-  //   console.log('the event.target.cookiespercustomer.value is ', event.target.cookiespercustomer.value);
-  // }
+  if(event){
+    console.log('the event.target is: ', event.target);
+    console.log('the event.target.location is: ', event.target.location);
+    console.log('the event.target.location.value is: ', event.target.location.value);
+    console.log('the event.target.mincustomer is: ', event.target.mincustomers);
+    console.log('the event.target.mincustomer.value is ', event.target.mincustomers.value);   
+    console.log('the event.target.maxcustomer is: ', event.target.maxcustomers);
+    console.log('the event.target.maxcustomer.value is: ', event.target.maxcustomers.value);  
+    console.log('the event.target.cookiespercustomer is: ', event.target.cookiespercustomer);
+    console.log('the event.target.cookiespercustomer.value is: ', event.target.cookiespercustomer.value);
+  }
 
   var newStoreCity = event.target.location.value;
   var newMinCustomers = event.target.mincustomers.value;
